@@ -10,12 +10,12 @@ import glob
 import argparse
 
 
-parser = argparse.ArgumentParser(description='csv2xml converter')
+parser = argparse.ArgumentParser(description='csv2xml : permet de convertir un document CSV en XML')
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-f", "--file", dest="csvFile", help="Nom du fichier CSV")
 group.add_argument("-d", "--dir", action="store_true", help="Tous les fichiers CSV du répertoire courant")
 
-parser.add_argument("-i", "--id", default='', dest="idList", help='colonnes qui forment l\'identifiant sous la forme “c1 c2..." ')
+parser.add_argument("-i", "--id", default='', dest="idList", help='colonnes qui forment l\'identifiant sous la forme “c1 c2..." (remplacer les espaces par des _)')
 
 args = parser.parse_args()
 
