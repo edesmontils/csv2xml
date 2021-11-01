@@ -2,8 +2,8 @@
 # La première ligne contient les entêtes obligatoirement (pour l'instant...)
 
 # TODO
-# - paramètres de la ligne de commande avec la lib qui va bien
 # - en ligne de commande définir l'id et ajouter l'attribut xml:id
+# - en ligne de commande, spécifier si 1ere ligne avec noms ou pas
 # - mettre en attribut les données "courtes" (comment les identifier ? est-ce que 1ere ligne suffit ?)
 # - gérer l'encodage (sans doute utf-8 par défaut)
 # - gérer les caractères &, ", ' dans les cdc
