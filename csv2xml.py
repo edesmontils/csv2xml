@@ -2,7 +2,6 @@
 # La première ligne contient les entêtes obligatoirement (pour l'instant...)
 
 # TODO
-# - en ligne de commande définir l'id et ajouter l'attribut xml:id
 # - en ligne de commande, spécifier si 1ere ligne avec noms ou pas
 # - mettre en attribut les données "courtes" (comment les identifier ? est-ce que 1ere ligne suffit ?)
 # - gérer l'encodage (sans doute utf-8 par défaut)
@@ -21,6 +20,8 @@ group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-f", "--file", dest="csvFile", help="Nom du fichier CSV")
 group.add_argument("-d", "--dir", action="store_true", help="Tous les fichiers CSV du répertoire courant")
 
+parser.add_argument("-i", "--id", default='', dest="idList", help="colonnes qui forment l'identifiant")
+
 args = parser.parse_args()
 
 if args.dir :
@@ -31,14 +32,17 @@ else :
     if arg.endswith('.csv'):
         csvFiles = [arg]    
 
-
+if not(args.idList == '') :
+    idList = args.idList.split()
+    print(idList)
+else : idList = [] 
 
 for csvFileName in csvFiles:
     xmlFile = csvFileName[:-4] + '.xml'
     print("Transfortation de "+csvFileName+" en "+xmlFile)
     
     with open(csvFileName, 'r') as csvFile :
-        csvReader = csv.reader(csvFile)
+        csvReader = csv.DictReader(csvFile)
 
         with open(xmlFile, 'w') as xmlData :
             xmlData.write('<?xml version="1.0"?>' + "\n")
@@ -46,16 +50,16 @@ for csvFileName in csvFiles:
 
             lgn = 0
             for row in csvReader:
-                if lgn == 0:
-                    tags = row
-                    for i in range(len(tags)):
-                        tags[i] = tags[i].replace(' ', '_')
-                else: 
-                    xmlData.write('    <lgn no="'+str(lgn)+'">' + "\n")
-                    for i in range(len(tags)):
-                        xmlData.write('        ' + '<' + tags[i] + '>' \
-                                      + row[i].replace('<','&lt;').replace('>','&gt;') + '</' + tags[i] + '>' + "\n")
-                    xmlData.write('    </lgn>' + "\n")
+                id_ = 'id'
+                for c in csvReader.fieldnames :
+                    if c.replace(' ', '_') in idList : id_ = id_ + '_' + row[c]
+                if id_ != 'id' :
+                    xmlData.write('    <lgn xml:id="'+id_+'" no="'+str(lgn)+'">' + "\n")
+                else : xmlData.write('    <lgn xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'">' + "\n")
+                for i in csvReader.fieldnames:
+                    xmlData.write('        ' + '<' + i.replace(' ', '_') + '>' \
+                                  + row[i].replace('<','&lt;').replace('>','&gt;') + '</' + i.replace(' ', '_') + '>' + "\n")
+                xmlData.write('    </lgn>' + "\n")
                         
                 lgn +=1
 
