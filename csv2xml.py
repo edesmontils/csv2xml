@@ -20,7 +20,7 @@ group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-f", "--file", dest="csvFile", help="Nom du fichier CSV")
 group.add_argument("-d", "--dir", action="store_true", help="Tous les fichiers CSV du répertoire courant")
 
-parser.add_argument("-i", "--id", default='', dest="idList", help="colonnes qui forment l'identifiant")
+parser.add_argument("-i", "--id", default='', dest="idList", help='colonnes qui forment l\'identifiant sous la forme “c1 c2..." ')
 
 args = parser.parse_args()
 
