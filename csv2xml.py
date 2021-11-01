@@ -1,12 +1,7 @@
-# csv2xml.py
-# La première ligne contient les entêtes obligatoirement (pour l'instant...)
+#!/usr/bin/env python3.7
+# coding: utf8
 
-# TODO
-# - en ligne de commande, spécifier si 1ere ligne avec noms ou pas
-# - mettre en attribut les données "courtes" (comment les identifier ? est-ce que 1ere ligne suffit ?)
-# - gérer l'encodage (sans doute utf-8 par défaut)
-# - gérer les caractères &, ", ' dans les cdc
-# - si grand texte, section CDATA putôt que redéfinition des caractères dangereux.
+# La première ligne contient les entêtes obligatoirement (pour l'instant...)
 
 import csv
 import sys
@@ -64,3 +59,4 @@ for csvFileName in csvFiles:
                 lgn +=1
 
             xmlData.write('</csv>' + "\n")
+print('Fin')
