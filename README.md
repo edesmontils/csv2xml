@@ -7,7 +7,7 @@ usage: csv2xml.py [-h] (-f CSVFILE | -d) [-i IDLIST]
 
 
 
-csv2xml converter
+csv2xml : permet de convertir un document CSV en XML
 
 
 
