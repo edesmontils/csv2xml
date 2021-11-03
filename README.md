@@ -20,9 +20,13 @@ optional arguments:
   -k                    Les éléments vides ne sont pas mis
 ```
 
+## Librairies utiles et Python
+
+Ce programme utilise les librairies "argparse", "csv", "os", "sys" et "glob". Il a été testé avec Python 3.6.10.
+
 ## Exemple
 
-Document CSV :
+### Document CSV "test.csv" :
 
 ```csv
 c1,c2,c3
@@ -33,13 +37,13 @@ c1,c2,c3
 9,10,11
 ```
 
-Commande :
+### Commande :
 
 ```shell
 python csv2xml.py -f test.csv -r toto -n ltl -k
 ```
 
-Résultat :
+### Résultat "test.xml" :
 
 ```xml
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -78,4 +82,12 @@ Résultat :
     </ltl>
 </toto>
 ```
+
+## Copyright
+
+GNU General Public License (GNU GPL) v3.0
+
+
+
+© E. Desmontils, Université de Nantes, Novembre 2021
 
