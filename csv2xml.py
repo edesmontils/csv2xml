@@ -68,10 +68,10 @@ for csvFileName in csvFiles:
 
             lgn = 0
             for row in csvReader:
-                id_ = 'id'
+                id_ = args.name+'_'
                 for c in csvReader.fieldnames :
                     if c.replace(' ', '_') in idList : id_ = id_ + '_' + row[c]
-                if id_ != 'id' :
+                if id_ != args.name+'_' :
                     xmlData.write('    <'+args.name+' xml:id="'+id_+'" no="'+str(lgn)+'">' + "\n")
                 else : xmlData.write('    <'+args.name+' xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'">' + "\n")
                 for i in csvReader.fieldnames:
