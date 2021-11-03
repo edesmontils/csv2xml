@@ -43,10 +43,12 @@ for csvFileName in csvFiles:
     
     with open(csvFileName, 'r') as csvFile :
         csvReader = csv.DictReader(csvFile)
-        print(csvReader.fieldnames)
         with open(xmlFile, 'w') as xmlData :
+
+            # Génération de l'entête
             xmlData.write('<?xml version="1.0" encoding="utf-8" standalone="yes"?>' + "\n")
 
+            # Génération de la DTD
             xmlData.write('<!DOCTYPE '+args.root+' ['+ "\n")
             xmlData.write('   <!ELEMENT '+args.root+' ('+args.name+')* >'+ "\n" )
             xmlData.write('   <!ELEMENT '+args.name+' (')
@@ -61,6 +63,7 @@ for csvFileName in csvFiles:
                 xmlData.write('   <!ELEMENT '+ele+ ' (#PCDATA) >'+ "\n")
             xmlData.write(']>'+ "\n")
 
+            # Génération du corps
             xmlData.write('<'+args.root+'>' + "\n")
 
             lgn = 0
