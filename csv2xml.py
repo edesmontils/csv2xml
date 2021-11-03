@@ -16,6 +16,8 @@ group.add_argument("-f", "--file", dest="csvFile", help="Nom du fichier CSV")
 group.add_argument("-d", "--dir", action="store_true", help="Tous les fichiers CSV du répertoire courant")
 
 parser.add_argument("-i", "--id", default='', dest="idList", help='colonnes qui forment l\'identifiant sous la forme “c1 c2..." (remplacer les espaces par des _)')
+parser.add_argument("-n", "--name", default='lgn', dest="name", help='Nom des éléments ("lgn" par défaut)')
+parser.add_argument("-r", "--root", default='csv', dest="root", help='Nom de la racine ("csv" par défaut)')
 
 args = parser.parse_args()
 
@@ -38,10 +40,22 @@ for csvFileName in csvFiles:
     
     with open(csvFileName, 'r') as csvFile :
         csvReader = csv.DictReader(csvFile)
-
+        print(csvReader.fieldnames)
         with open(xmlFile, 'w') as xmlData :
             xmlData.write('<?xml version="1.0"?>' + "\n")
-            xmlData.write('<csv>' + "\n")
+
+            xmlData.write('<!DOCTYPE '+args.root+' ['+ "\n")
+            xmlData.write('<!ELEMENT '+args.root+' ('+args.name+')* >'+ "\n" )
+            xmlData.write('<!ELEMENT '+args.name+' ('+csvReader.fieldnames[0] )
+            for ele in csvReader.fieldnames[1:] :
+                xmlData.write(', '+ele)
+            xmlData.write(') >'+ "\n")
+            xmlData.write('<!ATTLIST '+args.name+ ' xml:id ID #REQUIRED no CDATA #REQUIRED >'+ "\n" )
+            for ele in csvReader.fieldnames :
+                xmlData.write('<!ELEMENT '+ele+ ' (#PCDATA) >'+ "\n")
+            xmlData.write(']>'+ "\n")
+
+            xmlData.write('<'+args.root+'>' + "\n")
 
             lgn = 0
             for row in csvReader:
@@ -49,14 +63,14 @@ for csvFileName in csvFiles:
                 for c in csvReader.fieldnames :
                     if c.replace(' ', '_') in idList : id_ = id_ + '_' + row[c]
                 if id_ != 'id' :
-                    xmlData.write('    <lgn xml:id="'+id_+'" no="'+str(lgn)+'">' + "\n")
-                else : xmlData.write('    <lgn xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'">' + "\n")
+                    xmlData.write('    <'+args.name+' xml:id="'+id_+'" no="'+str(lgn)+'">' + "\n")
+                else : xmlData.write('    <'+args.name+' xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'">' + "\n")
                 for i in csvReader.fieldnames:
                     xmlData.write('        ' + '<' + i.replace(' ', '_') + '>' \
                                   + row[i].replace('<','&lt;').replace('>','&gt;') + '</' + i.replace(' ', '_') + '>' + "\n")
-                xmlData.write('    </lgn>' + "\n")
+                xmlData.write('    </'+args.name+'>' + "\n")
                         
                 lgn +=1
 
-            xmlData.write('</csv>' + "\n")
+            xmlData.write('</'+args.root+'>' + "\n")
 print('Fin')

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE toto [
+<!ELEMENT toto (ltl)* >
+<!ELEMENT ltl (c1, c2, c3) >
+<!ATTLIST ltl xml:id ID #REQUIRED no CDATA #REQUIRED >
+<!ELEMENT c1 (#PCDATA) >
+<!ELEMENT c2 (#PCDATA) >
+<!ELEMENT c3 (#PCDATA) >
+]>
+<toto>
+    <ltl xml:id="id0" no="0">
+        <c1>1</c1>
+        <c2>2</c2>
+        <c3>3</c3>
+    </ltl>
+    <ltl xml:id="id1" no="1">
+        <c1>2</c1>
+        <c2>3</c2>
+        <c3>4</c3>
+    </ltl>
+    <ltl xml:id="id2" no="2">
+        <c1>3</c1>
+        <c2>4</c2>
+        <c3>5</c3>
+    </ltl>
+</toto>
