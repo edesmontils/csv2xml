@@ -95,7 +95,7 @@ for csvFileName in csvFiles:
 
                 newGrp = ''
                 for e in groupList :
-                    newGrp = newGrp + row[e]
+                    newGrp = newGrp + row[e].replace(' ', '_')
 
                 if noGrp != newGrp :
                     if noGrp != '' : xmlData.write('    </'+'group'+'>' + "\n")
