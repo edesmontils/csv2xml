@@ -16,6 +16,7 @@ group.add_argument("-f", "--file", dest="csvFile", help="Nom du fichier CSV")
 group.add_argument("-d", "--dir", action="store_true", help="Tous les fichiers CSV du répertoire courant")
 
 parser.add_argument("-i", "--id", default='', dest="idList", help='colonnes qui forment l\'identifiant sous la forme “c1 c2..." (remplacer les espaces par des _)')
+parser.add_argument("-g", "--group", default='', dest="groupList", help='colonnes qui sont "id" à regrouper sous la forme “c1 c2..." (remplacer les espaces par des _)')
 
 parser.add_argument("-n", "--name", default='lgn', dest="name", help='Nom des éléments ("lgn" par défaut)')
 parser.add_argument("-r", "--root", default='csv', dest="root", help='Nom de la racine ("csv" par défaut)')
