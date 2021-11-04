@@ -104,9 +104,10 @@ for csvFileName in csvFiles:
                 for c in csvReader.fieldnames :
                     if c.replace(' ', '_') in idList : id_ = id_ + '.' + row[c]
                 if id_ != args.name :
-                    xmlData.write('       <'+args.name+' xml:id="'+id_+'" no="'+str(lgn)+'"' + "\n")
-                else : xmlData.write('       <'+args.name+' xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'"')
-                xmlData.write('>' + "\n")
+                    xmlData.write('       <'+args.name+' xml:id="'+id_+'" no="'+str(lgn)+'">' + "\n")
+                else : xmlData.write('       <'+args.name+' xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'">' + "\n")
+
+
                 for i in csvReader.fieldnames:
                     if not(args.k and row[i] == '') : 
                         xmlData.write('           ' + '<' + i.replace(' ', '_') + '>' \
