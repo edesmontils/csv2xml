@@ -26,7 +26,11 @@
            <c2>4</c2>
            <c3>5</c3>
        </ltl>
+<<<<<<< Updated upstream
        <ltl xml:id="ltl4" no="4">
+=======
+       <ltl xml:id="ltl3" no="3">
+>>>>>>> Stashed changes
            <c1>6</c1>
            <c3>8</c3>
        </ltl>
