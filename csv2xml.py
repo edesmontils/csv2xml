@@ -95,7 +95,8 @@ for csvFileName in csvFiles:
             tab = 1
             lastRow = ''
             for row in csvReader:
-                if args.dd and ''.join([x for x in row.values()]) == lastRow :
+                currentRow = ','.join([x for x in row.values()])
+                if args.dd and currentRow == lastRow :
                     pass
                 else :
                     id_ = args.name
@@ -123,7 +124,7 @@ for csvFileName in csvFiles:
 
 
                     noGrp = newGrp
-                lastRow = ''.join([x for x in row.values()])
+                lastRow = currentRow
                 
                 lgn +=1
 
