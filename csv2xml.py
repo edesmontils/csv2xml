@@ -21,7 +21,10 @@ parser.add_argument("-g", "--group", default='', dest="groupList", help='colonne
 parser.add_argument("-n", "--name", default='lgn', dest="name", help='Nom des éléments ("lgn" par défaut)')
 parser.add_argument("-r", "--root", default='csv', dest="root", help='Nom de la racine ("csv" par défaut)')
 
-parser.add_argument("-k", action="store_true", help="Les éléments vides ne sont pas mis")
+parser.add_argument("-k", action="store_true", help="Les éléments vides ne sont pas mis.")
+
+parser.add_argument("-dd", action="store_true", help="Suppression des lignes successives identiques.")
+
 
 args = parser.parse_args()
 
@@ -90,32 +93,38 @@ for csvFileName in csvFiles:
             lgn = 0
             noGrp = ''
             tab = 1
+            lastRow = ''
             for row in csvReader:
-                id_ = args.name
+                if args.dd and ''.join([x for x in row.values()]) == lastRow :
+                    pass
+                else :
+                    id_ = args.name
 
-                newGrp = ''
-                for e in groupList :
-                    newGrp = newGrp + row[e].replace(' ', '_')
+                    newGrp = ''
+                    for e in groupList :
+                        newGrp = newGrp + row[e].replace(' ', '_')
 
-                if noGrp != newGrp :
-                    if noGrp != '' : xmlData.write('    </'+'group'+'>' + "\n")
-                    xmlData.write('    <'+'group'+' xml:id="'+prefix+newGrp+'">' + "\n")
+                    if noGrp != newGrp :
+                        if noGrp != '' : xmlData.write('    </'+'group'+'>' + "\n")
+                        xmlData.write('    <'+'group'+' xml:id="'+prefix+newGrp+'">' + "\n")
 
-                for c in csvReader.fieldnames :
-                    if c.replace(' ', '_') in idList : id_ = id_ + '.' + row[c]
-                if id_ != args.name :
-                    xmlData.write('       <'+args.name+' xml:id="'+id_+'" no="'+str(lgn)+'">' + "\n")
-                else : xmlData.write('       <'+args.name+' xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'">' + "\n")
-
-
-                for i in csvReader.fieldnames:
-                    if not(args.k and row[i] == '') : 
-                        xmlData.write('           ' + '<' + i.replace(' ', '_') + '>' \
-                                  + row[i].replace('<','&lt;').replace('>','&gt;') + '</' + i.replace(' ', '_') + '>' + "\n")
-                xmlData.write('       </'+args.name+'>' + "\n")
+                    for c in csvReader.fieldnames :
+                        if c.replace(' ', '_') in idList : id_ = id_ + '.' + row[c]
+                    if id_ != args.name :
+                        xmlData.write('       <'+args.name+' xml:id="'+id_+'" no="'+str(lgn)+'">' + "\n")
+                    else : xmlData.write('       <'+args.name+' xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'">' + "\n")
 
 
-                noGrp = newGrp
+                    for i in csvReader.fieldnames:
+                        if not(args.k and row[i] == '') : 
+                            xmlData.write('           ' + '<' + i.replace(' ', '_') + '>' \
+                                      + row[i].replace('<','&lt;').replace('>','&gt;') + '</' + i.replace(' ', '_') + '>' + "\n")
+                    xmlData.write('       </'+args.name+'>' + "\n")
+
+
+                    noGrp = newGrp
+                lastRow = ''.join([x for x in row.values()])
+                
                 lgn +=1
 
             if noGrp != '' : xmlData.write('    </'+'group'+'>' + "\n")
