@@ -88,7 +88,7 @@ for csvFileName in csvFiles:
             xmlData.write(']>'+ "\n")
 
             # Génération du corps
-            xmlData.write('<'+args.root+'>' + "\n")
+            xmlData.write('<'+args.root+'>' + "\n") 
 
             lgn = 0
             noGrp = ''
