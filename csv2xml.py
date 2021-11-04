@@ -25,7 +25,7 @@ parser.add_argument("-k", action="store_true", help="Les éléments vides ne son
 
 parser.add_argument("-dd", action="store_true", help="Suppression des lignes successives identiques.")
 
-
+ 
 args = parser.parse_args()
 
 if args.dir :
