@@ -16,6 +16,7 @@ group.add_argument("-f", "--file", dest="csvFile", help="Nom du fichier CSV")
 group.add_argument("-d", "--dir", action="store_true", help="Tous les fichiers CSV du répertoire courant")
 
 parser.add_argument("-i", "--id", default='', dest="idList", help='colonnes qui forment l\'identifiant sous la forme “c1 c2..." (remplacer les espaces par des _)')
+# parser.add_argument("-e", "--idref", default='', dest="idrefList", help='colonnes qui sont idref sous la forme “c1:pref1 c2:pref2..." (remplacer les espaces par des _)')
 
 parser.add_argument("-n", "--name", default='lgn', dest="name", help='Nom des éléments ("lgn" par défaut)')
 parser.add_argument("-r", "--root", default='csv', dest="root", help='Nom de la racine ("csv" par défaut)')
@@ -36,6 +37,14 @@ if not(args.idList == '') :
     idList = args.idList.split()
     print(idList)
 else : idList = [] 
+
+# if not(args.idrefList == '') :
+#     idrefList = {}
+#     for x in args.idrefList.split() :
+#         y = x.split(':')
+#         idrefList[y[0]]=y[1]
+#     print(idrefList)
+# else : idrefList = {} 
 
 for csvFileName in csvFiles:
     xmlFile = csvFileName[:-4] + '.xml'
@@ -58,9 +67,13 @@ for csvFileName in csvFiles:
                 xmlData.write(', '+ele)
                 if args.k: xmlData.write('?' )
             xmlData.write(') >'+ "\n")
-            xmlData.write('   <!ATTLIST '+args.name+ ' xml:id ID #REQUIRED no CDATA #REQUIRED >'+ "\n" )
+            xmlData.write('   <!ATTLIST '+args.name+ "\n" )
+            xmlData.write('           xml:id ID #REQUIRED no CDATA #REQUIRED'+ "\n" )
+            xmlData.write('   >'+ "\n" )
+
             for ele in csvReader.fieldnames :
                 xmlData.write('   <!ELEMENT '+ele+ ' (#PCDATA) >'+ "\n")
+
             xmlData.write(']>'+ "\n")
 
             # Génération du corps
@@ -68,12 +81,13 @@ for csvFileName in csvFiles:
 
             lgn = 0
             for row in csvReader:
-                id_ = args.name+'_'
+                id_ = args.name
                 for c in csvReader.fieldnames :
-                    if c.replace(' ', '_') in idList : id_ = id_ + '_' + row[c]
-                if id_ != args.name+'_' :
-                    xmlData.write('    <'+args.name+' xml:id="'+id_+'" no="'+str(lgn)+'">' + "\n")
-                else : xmlData.write('    <'+args.name+' xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'">' + "\n")
+                    if c.replace(' ', '_') in idList : id_ = id_ + '.' + row[c]
+                if id_ != args.name :
+                    xmlData.write('    <'+args.name+' xml:id="'+id_+'" no="'+str(lgn)+'"' + "\n")
+                else : xmlData.write('    <'+args.name+' xml:id="'+id_+str(lgn)+'" no="'+str(lgn)+'"')
+                xmlData.write('>' + "\n")
                 for i in csvReader.fieldnames:
                     if not(args.k and row[i] == '') : 
                         xmlData.write('        ' + '<' + i.replace(' ', '_') + '>' \

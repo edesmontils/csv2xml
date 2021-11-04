@@ -2,32 +2,34 @@
 <!DOCTYPE toto [
    <!ELEMENT toto (ltl)* >
    <!ELEMENT ltl (c1?, c2?, c3?) >
-   <!ATTLIST ltl xml:id ID #REQUIRED no CDATA #REQUIRED >
+   <!ATTLIST ltl
+           xml:id ID #REQUIRED no CDATA #REQUIRED
+   >
    <!ELEMENT c1 (#PCDATA) >
    <!ELEMENT c2 (#PCDATA) >
    <!ELEMENT c3 (#PCDATA) >
 ]>
 <toto>
-    <ltl xml:id="ltl_0" no="0">
+    <ltl xml:id="ltl0" no="0">
         <c1>1</c1>
         <c2>2</c2>
         <c3>3</c3>
     </ltl>
-    <ltl xml:id="ltl_1" no="1">
+    <ltl xml:id="ltl1" no="1">
         <c1>2</c1>
         <c2>3</c2>
         <c3>4</c3>
     </ltl>
-    <ltl xml:id="ltl_2" no="2">
+    <ltl xml:id="ltl2" no="2">
         <c1>3</c1>
         <c2>4</c2>
         <c3>5</c3>
     </ltl>
-    <ltl xml:id="ltl_3" no="3">
+    <ltl xml:id="ltl3" no="3">
         <c1>6</c1>
         <c3>8</c3>
     </ltl>
-    <ltl xml:id="ltl_4" no="4">
+    <ltl xml:id="ltl4" no="4">
         <c1>9</c1>
         <c2>10</c2>
         <c3>11</c3>
