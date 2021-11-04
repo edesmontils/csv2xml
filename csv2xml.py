@@ -16,7 +16,6 @@ group.add_argument("-f", "--file", dest="csvFile", help="Nom du fichier CSV")
 group.add_argument("-d", "--dir", action="store_true", help="Tous les fichiers CSV du répertoire courant")
 
 parser.add_argument("-i", "--id", default='', dest="idList", help='colonnes qui forment l\'identifiant sous la forme “c1 c2..." (remplacer les espaces par des _)')
-# parser.add_argument("-e", "--idref", default='', dest="idrefList", help='colonnes qui sont idref sous la forme “c1:pref1 c2:pref2..." (remplacer les espaces par des _)')
 
 parser.add_argument("-n", "--name", default='lgn', dest="name", help='Nom des éléments ("lgn" par défaut)')
 parser.add_argument("-r", "--root", default='csv', dest="root", help='Nom de la racine ("csv" par défaut)')
@@ -37,14 +36,6 @@ if not(args.idList == '') :
     idList = args.idList.split()
     print(idList)
 else : idList = [] 
-
-# if not(args.idrefList == '') :
-#     idrefList = {}
-#     for x in args.idrefList.split() :
-#         y = x.split(':')
-#         idrefList[y[0]]=y[1]
-#     print(idrefList)
-# else : idrefList = {} 
 
 for csvFileName in csvFiles:
     xmlFile = csvFileName[:-4] + '.xml'
