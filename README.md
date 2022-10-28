@@ -12,12 +12,18 @@ optional arguments:
   -f CSVFILE, --file CSVFILE
                         Nom du fichier CSV
   -d, --dir             Tous les fichiers CSV du répertoire courant
+  -s DELIMITER, --sep DELIMITER
+                        délimiteur de colonnes ("," par défaut)
   -i IDLIST, --id IDLIST
                         colonnes qui forment l'identifiant sous la forme “c1
                         c2..." (remplacer les espaces par des _)
+  -g GROUPLIST, --group GROUPLIST
+                        colonnes qui sont "id" à regrouper sous la forme “pref
+                        c1 c2..." (remplacer les espaces par des _)
   -n NAME, --name NAME  Nom des éléments ("lgn" par défaut)
   -r ROOT, --root ROOT  Nom de la racine ("csv" par défaut)
-  -k                    Les éléments vides ne sont pas mis
+  -k                    Les éléments vides ne sont pas mis.
+  -dd                   Suppression des lignes successives identiques.
 ```
 
 ## Librairies utiles et Python

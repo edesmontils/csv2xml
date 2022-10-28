@@ -15,6 +15,8 @@ group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-f", "--file", dest="csvFile", help="Nom du fichier CSV")
 group.add_argument("-d", "--dir", action="store_true", help="Tous les fichiers CSV du répertoire courant")
 
+parser.add_argument("-s", "--sep", default=',', dest='delimiter', help='délimiteur de colonnes ("," par défaut)')
+
 parser.add_argument("-i", "--id", default='', dest="idList", help='colonnes qui forment l\'identifiant sous la forme “c1 c2..." (remplacer les espaces par des _)')
 parser.add_argument("-g", "--group", default='', dest="groupList", help='colonnes qui sont "id" à regrouper sous la forme “pref c1 c2..." (remplacer les espaces par des _)')
 
@@ -55,7 +57,7 @@ for csvFileName in csvFiles:
     print("Transfortation de "+csvFileName+" en "+xmlFile)
     
     with open(csvFileName, 'r') as csvFile :
-        csvReader = csv.DictReader(csvFile)
+        csvReader = csv.DictReader(csvFile,delimiter=args.delimiter)
         with open(xmlFile, 'w') as xmlData :
 
             # Génération de l'entête
@@ -72,6 +74,7 @@ for csvFileName in csvFiles:
                 xmlData.write('   <!ATTLIST '+'group xml:id ID #REQUIRED'+" >\n" )
 
             xmlData.write('   <!ELEMENT '+args.name+' (')
+            print(csvReader.fieldnames)
             if args.k: xmlData.write(csvReader.fieldnames[0]+'?' )
             else: xmlData.write(csvReader.fieldnames[0] )
             for ele in csvReader.fieldnames[1:] :
@@ -95,7 +98,8 @@ for csvFileName in csvFiles:
             tab = 1
             lastRow = ''
             for row in csvReader:
-                currentRow = ','.join([x for x in row.values()])
+                print(row)
+                currentRow = ','.join([x for x in row.values() if isinstance(x,list)])
                 if args.dd and currentRow == lastRow :
                     pass
                 else :
