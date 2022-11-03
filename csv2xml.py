@@ -98,7 +98,7 @@ for csvFileName in csvFiles:
             tab = 1
             lastRow = ''
             for row in csvReader:
-                print(row)
+                #print(row)
                 currentRow = ','.join([x for x in row.values() if isinstance(x,list)])
                 if args.dd and currentRow == lastRow :
                     pass
